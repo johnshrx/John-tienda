@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================
+   Easy Cheats — Design System
+   Tema oscuro azul, vibe gamer / tech.
+   Todos los colores en HSL.
+   =========================================== */
+
+@layer base {
+  :root {
+    /* Forzamos tema oscuro permanente */
+    --background: 222 60% 6%;            /* #0A1226 azul muy oscuro */
+    --foreground: 210 40% 98%;
+
+    --card: 222 55% 9%;                  /* superficie cards */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 55% 9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 100% 56%;             /* azul eléctrico */
+    --primary-foreground: 222 60% 6%;
+
+    --secondary: 222 45% 14%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 222 35% 14%;
+    --muted-foreground: 215 25% 70%;
+
+    --accent: 190 95% 55%;               /* cyan */
+    --accent-foreground: 222 60% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 35% 18%;
+    --input: 220 35% 14%;
+    --ring: 210 100% 56%;
+
+    --radius: 0.75rem;
+
+    /* Marca */
+    --brand-deep: 222 70% 10%;
+    --brand-mid:  220 65% 18%;
+    --brand-glow: 210 100% 60%;
+    --brand-cyan: 190 95% 55%;
+
+    /* Gradientes y sombras */
+    --gradient-hero: radial-gradient(ellipse at top,
+      hsl(210 100% 56% / 0.25) 0%,
+      hsl(222 60% 6% / 0) 60%),
+      linear-gradient(180deg, hsl(222 70% 8%) 0%, hsl(222 60% 6%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(210 100% 56%) 0%, hsl(190 95% 55%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(222 55% 11%) 0%, hsl(222 55% 8%) 100%);
+    --gradient-border: linear-gradient(135deg, hsl(210 100% 56% / 0.5), hsl(190 95% 55% / 0.2));
+
+    --shadow-glow: 0 0 40px -8px hsl(210 100% 56% / 0.55);
+    --shadow-card: 0 10px 40px -15px hsl(222 80% 4% / 0.8);
+    --shadow-elevated: 0 20px 60px -20px hsl(210 100% 56% / 0.35);
+
+    --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 222 60% 7%;
+    --sidebar-foreground: 210 40% 95%;
+    --sidebar-primary: 210 100% 56%;
+    --sidebar-primary-foreground: 222 60% 6%;
+    --sidebar-accent: 222 45% 14%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 220 35% 18%;
+    --sidebar-ring: 210 100% 56%;
+  }
+
+  /* No usamos clase .dark — el tema oscuro es el único, pero la mantenemos por compatibilidad shadcn */
+  .dark {
+    --background: 222 60% 6%;
+    --foreground: 210 40% 98%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html { color-scheme: dark; }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Rajdhani', 'Inter', system-ui, sans-serif;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(210 100% 56% / 0.15), transparent),
+      radial-gradient(ellipse 50% 50% at 80% 100%, hsl(190 95% 55% / 0.08), transparent);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    @apply tracking-tight;
+  }
+
+  /* Scrollbar oscura */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--background)); }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.6); }
+}
+
+@layer components {
+  /* === Marca Easy Cheats: fuente Audiowide + lava azul animada === */
+  .brand-text {
+    font-family: 'Audiowide', 'Orbitron', sans-serif;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .brand-text-plain {
+    color: hsl(var(--foreground));
+    text-shadow: 0 0 12px hsl(var(--primary) / 0.35);
+  }
+  .brand-lava {
+    background-image: linear-gradient(
+      120deg,
+      hsl(220 100% 70%) 0%,
+      hsl(195 100% 60%) 25%,
+      hsl(180 100% 70%) 40%,
+      hsl(210 100% 55%) 55%,
+      hsl(240 100% 65%) 70%,
+      hsl(195 100% 60%) 85%,
+      hsl(220 100% 70%) 100%
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: lava-flow 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px hsl(var(--primary) / 0.5))
+            drop-shadow(0 0 16px hsl(var(--accent) / 0.35));
+  }
+  @keyframes lava-flow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Texto con gradiente para títulos hero */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  /* Borde con gradiente sutil */
+  .border-gradient {
+    position: relative;
+    background:
+      linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+      var(--gradient-border) border-box;
+    border: 1px solid transparent;
+  }
+
+  .glow-primary {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Patrón de grid sutil para fondos */
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.4) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Efecto spotlight: la luz sigue al cursor sobre las cards */
+  .card-spotlight {
+    --mx: 50%;
+    --my: 50%;
+  }
+  .card-spotlight-layer {
+    background: radial-gradient(
+      400px circle at var(--mx) var(--my),
+      hsl(var(--primary) / 0.18),
+      hsl(var(--accent) / 0.08) 30%,
+      transparent 60%
+    );
+    mix-blend-mode: screen;
+  }
+  .card-spotlight:hover {
+    border-color: hsl(var(--primary) / 0.4);
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.25),
+      0 20px 60px -20px hsl(var(--primary) / 0.45),
+      0 0 80px -20px hsl(var(--accent) / 0.35);
+  }
+}
+
+@layer utilities {
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+}

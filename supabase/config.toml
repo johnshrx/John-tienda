@@ -1,0 +1,13 @@
+project_id = "xakfzyfqqjtvqfacdjzi"
+
+# El webhook de Bold no envía JWT — se valida con firma SHA-256.
+[functions.bold-webhook]
+verify_jwt = false
+
+# El status público del pedido (para clientes no autenticados que regresan de Bold).
+[functions.order-status]
+verify_jwt = false
+
+# El checkout puede invocarse sin sesión (compras de invitado).
+[functions.bold-checkout]
+verify_jwt = false
